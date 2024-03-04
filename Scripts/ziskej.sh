@@ -11,7 +11,7 @@ elif [[ $1 == "test" ]]; then
   outd="../Output-test"
   urlz="https://ziskej-test.techlib.cz"
   token=`python3 get_token-test.py`
-  patron=<usr MVS test>
+  patron=<user MVS test>
 else
   echo "Zadej parametr ostry|test"; exit
 fi
@@ -68,6 +68,11 @@ do
   doc_id=${di%+*}
   doc_id="KNA01"${doc_id#*-}
 
+# Existuje subtiket v $que? -> preskoc zpracovani zaznamu. Jinak zapis do $que
+  [[ -f "$que" ]] && q=`grep  $subticket_id $que`
+  [[ $q ]] && continue
+  echo $subticket_id >> $que
+
   if [[ "$di" == *"null"* ]]; then
     echo "" | mailx -s "Novy pozadavek bez doc_id" $email
     date >> $log_f
@@ -76,11 +81,6 @@ do
     echo >> $log_f
     continue
   fi
-
-  [[ -f "$que" ]] && q=`grep  $subticket_id $que`; [[ $q ]] && continue
-  echo $subticket_id >> $que
-
-
 
 
 ###Records
