@@ -7,7 +7,7 @@ import jwt # pip install pyjwt
 app_id = 'aba007'
 
 
-shared_secret = '1d775c98-a91f-4ead-aaff-3231abbe425f' #ostra
+shared_secret = 'xxxxx' #ostra
 
 now = datetime.datetime.utcnow()
 
